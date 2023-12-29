@@ -1,0 +1,29 @@
+<section id="integraciones" [hidden]="virtualRouter.routerActive!=='integraciones'">
+    <div class="container">
+        <h2 class="section-title wow fadeIn">Integraciones
+            <span style="color: #FF4C60;" class="icon icon-plus" (click)="edit()"></span>
+        </h2>
+        <div class="spacer" data-height="60"></div>
+        <div class="row">
+            <div class="row portfolio-wrapper col-md-8">
+                <div class="col-md-4 pr-md-0 mt-md-4 mt-0"
+                    *ngFor="let integration of global.integrations; let i = index" style="cursor: pointer;">
+                    <div class="price-item bg-white rounded shadow-dark text-center">
+                        <img src="{{integration.images[0]}}" alt="Regular" />
+                        <h2 class="plan">{{integration.name}}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-"></div>
+            <div class="col-md-4 ">
+                <div class="contact-info">
+                    <h3 class="wow fadeInUp">{{global.integrationSelected.name}}</h3>
+                    <div class="thumb">
+                        <img src="{{global.integrationSelected.images[0]}}" alt="" />
+                        <div class="mask"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
