@@ -15,6 +15,8 @@ import { ScriptService } from './../../services/script.service';
 export class AddPostComponent implements OnInit{ 
    @ViewChild('editor') editor!: ElementRef; // Add the definite assignment assertion modifier
 
+
+
   modules = {
     formula: true,
     toolbar: [      
@@ -22,8 +24,22 @@ export class AddPostComponent implements OnInit{
       ['bold', 'italic', 'underline'],
       ['formula'], 
       ['image', 'code-block']
+      ['title']
     ]
   };
+
+  objectFormat = [
+    { insert: 'Hello ' },
+    { insert: 'World!', attributes: { bold: true } },
+    { insert: '\n' }
+  ]
+
+  data = {
+    title: '',
+    autor: '',
+    body: '',
+  };
+
   constructor(
     // private deviceService: DeviceDetectorService,
     public script: ScriptService,
@@ -35,5 +51,8 @@ export class AddPostComponent implements OnInit{
   logChange($event: any) {
     console.log(this.editor);
     console.log($event);
+  }
+  ngOnInit(): void {
+    
   }
 }

@@ -25,6 +25,7 @@ export class GlobalService {
   private testimoniosUrl = 'https://db.buckapi.com:9023/api/testimonials';
   private modulosUrl = 'https://db.buckapi.com:9023/api/modules';
   private faqsUrl = 'https://db.buckapi.com:9023/api/faqs';
+  private postsUrl = 'https://db.buckapi.com:9023/api/posts';
   private infoUrl = '';
   private assetmentsUrl = '';
 
@@ -53,8 +54,10 @@ export class GlobalService {
 
   soluciones: any[] = [];
   solucionesSelected: any[] = [];
-  
 
+  posts: any[] = [];
+  postsSelected: any[] = [];
+  
   faqs: any[] = [];
   faqsSelected: any[] = [];
   faqsPreview:boolean=true;
@@ -75,6 +78,7 @@ export class GlobalService {
   moduloPreview:boolean=true;
   integrationPreview:boolean=true;
   rubroSelectedBoolean:boolean=false;
+  postsPreview:boolean=true;
   categories: any[] = [];
 
   currentPage: number = 1;
@@ -240,6 +244,23 @@ export class GlobalService {
       }
     );
   }
+  loadPosts() {
+    this.getAllPosts().subscribe(
+      (data) => {
+        this.posts = data;
+        this.totales.totalPosts=this.posts.length;
+        this.postsSelected = this.posts; // Asigna los registros obtenidos a la variable 'registros'
+        console.log(data);
+        let size = data.length;
+        
+/*         this.conteoModulos();
+ */        // Puedes hacer lo que quieras con los datos recibidos
+      },
+      (error) => {
+        console.error(error); // Manejo de errores si la solicitud falla
+      }
+    );
+  }
 
   getIntegrations(): Observable<any> {
     return this.http.get<any>(this.integrationsUrl);
@@ -261,6 +282,9 @@ export class GlobalService {
   }
   getFaqs(): Observable<any> {
     return this.http.get<any>(this.faqsUrl);
+  }
+  getAllPosts(): Observable<any> {
+    return this.http.get<any>(this.postsUrl);
   }
 
   setPrev(item: any) {

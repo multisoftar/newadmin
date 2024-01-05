@@ -7,6 +7,7 @@ export class Yeoman {
   allcategory:any=[];
   allCategoriesSize:number=0;
   
+  posts:any=[];
   categories:any=[];
   all:any=[];
   articulos:any[][]=[];

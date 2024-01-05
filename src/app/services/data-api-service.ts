@@ -13,7 +13,8 @@ export interface PartInterface {
 }
 export interface ClientInterface {
 }
-
+export interface PostInterface {
+}
 export interface DistInterface {
 }
 export interface ProductInterface {
@@ -85,9 +86,10 @@ export class DataApiService {
 		const url_api = this.yeoman.origin.restUrl+`/api/products/${id}`;
 		return this.http.get(url_api);
 	}
-	
-	
-	
+	getAllPosts(){
+		const url_api = this.yeoman.origin.restUrl+'/api/posts';
+		return this.http.get(url_api);
+	}
 	deleteProduct(id: string){
 		const token = this.AuthRESTService.getToken();
 		const url_api=	this.yeoman.origin.restUrl+`/api/products/${id}/?access_token$={token}`;
@@ -101,8 +103,15 @@ export class DataApiService {
 		return this.http
 		.delete<PartInterface>(url_api, {headers: this.headers})
 		.pipe(map(data => data));
+	
 	}
 	
+	savePost(post :PostInterface){
+		const url_api=	this.yeoman.origin.restUrl+'/api/posts';
+		return this.http
+		.post<PostInterface>(url_api, post)
+		.pipe(map(data => data));
+	}
 	saveTestimony(client :ClientInterface){
 		const url_api=	this.yeoman.origin.restUrl+'/api/testimonials';
 		return this.http

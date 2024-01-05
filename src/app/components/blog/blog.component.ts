@@ -65,20 +65,11 @@ export class BlogComponent implements AfterViewInit {
     newPost(){
       this.virtualRouter.routerActive="addpost";
     }
-      preview(client:any){
-        this.global.clientSelected=client;
-        this.global.clientPreview=true;
+      preview(posts:any){
+        this.global.postsSelected=posts;
+        this.global.postsPreview=true;
       }
-      onSubmit() {
-        this.data.ref = (Math.floor(Math.random() * 10000000000000)).toString();
-        this.data.images=this._butler.uploaderImages;
-        this.dataApiService.saveTestimony(this.data).subscribe(response=>{
-          console.log(response);
-          this._butler.uploaderImages=[];
-        });
-        console.log(this.data);
-        
-        }
+      
   ngAfterViewInit(): void {
 }
   }

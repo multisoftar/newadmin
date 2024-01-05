@@ -41,6 +41,7 @@ export class AppComponent implements  OnInit{
         this.global.loadTestimonios();
         this.global.loadIntegrations();
         this.global.loadModulos();
+        this.global.loadPosts();
         // this.epicFunction();
       }, 2000);
     }).catch(error => {
