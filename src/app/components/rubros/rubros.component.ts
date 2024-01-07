@@ -48,9 +48,12 @@ export class RubrosComponent {
       this.dataApiService.saveCategory(this.data).subscribe(response => {
         console.log(response);
         this._butler.uploaderImages = [];
-      });
+        this.editing = false;
+         });
+         
       console.log(this.data);
     }
+
     ngAfterViewInit(): void {
   
     }
