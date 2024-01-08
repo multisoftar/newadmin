@@ -1,20 +1,43 @@
 <section id="soluciones" [hidden]="virtualRouter.routerActive!=='soluciones'">
     <div class="container">
         <h2 class="section-title wow fadeInUp" [hidden]="editing">Soluciones
-            <span style="color: #FF4C60;" class="icon icon-plus" (click)="edit()" style="cursor: pointer;"></span>
+            <span style="color: #FF4C60;" class="icon icon-plus iconB" (click)="edit()" style="cursor: pointer;"></span>
         </h2>
         <h2 class="section-title wow fadeInUp" [hidden]="!editing">Nueva Solución </h2>
         <div class="spacer" data-height="60"></div>
         <div class="row">
             <div class="card col-md-5 timeline edu bg-white rounded shadow-dark padding-30 overflow-hidden"
-                [hidden]="editing" *ngFor="let solucion of global.soluciones" style="margin-bottom:5%; margin-left:2%">
-                <div class="timeline-container wow fadeInUp">
+            *ngFor="let solucion of global.soluciones; let i = index"
+            (mouseenter)="onMouseEnterCard(i)"
+              (mouseleave)="onMouseLeaveCard()" [hidden]="editing"
+           >
+       
+                <div class="wow fadeInUp"  style="margin-top: 35px;">
+                    <div class="thumb">
+                        <img src="{{solucion.images[0]}}" alt=""  style="border-radius: 25px;"/>
+                    </div>
                     <div class="content">
-                        <h3 class="title">{{solucion.name}}</h3>
-                        <p>{{solucion.detail}}</p>
+                        <h3 class="title" style="text-align: center;">{{solucion.name}}</h3>
+                        <p>{{solucion.description}}</p>
                     </div>
                 </div>
                 <span class="line"></span>
+                <div class="float-right-corner"   [hidden]="isMouseOverCard && i !== mouseOverIndex"
+               
+              >
+                    <span style="font-weight: 1000; font-size: 15px; color: #5e4cff;">
+                        <button type="submit" name="submit" id="submit" value="Submit"
+                            class="btn btn-outline-dark btn-xs">
+                            <span class="icon icon-pencil"></span>
+                        </button>
+                    </span>
+                    <span style="font-weight: 1000; font-size: 15px; color: #FF4C60; padding-left: 5px;">
+                        <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-default btn-xs"
+                            (click)="beforeDelete(solucion.id)">
+                            <span class="icon icon-trash"></span>
+                        </button>
+                    </span>
+                </div>
             </div>
             <div class="col-md-12" [hidden]="!editing">
                 <form>
@@ -48,27 +71,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="">
-                                <div class="">
-                                    <div class="form-group">
-                                        <label for="event-description">Rubro</label>
-                                        <select id="category" class="form-control wide my-custom-select"
-                                            [(ngModel)]="category" (ngModelChange)="setCategory(category)"
-                                            [ngModelOptions]="{standalone: true}">
-                                            <option *ngFor="let category of yeoman.allcategory, let i = index "
-                                                [ngValue]="i">
-                                                <span style="cursor:pointer;">{{category.name}}</span>
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div div class="popup-box-actions medium void" style="text-align: end;">
-                        <button class="btn btn-primary" id="closeButton" (click)="onSubmit()" style="background-color: #558b2f;
-                        border-color: #558b2f; margin-right: 10px;">Guardar solucion!</button>
-                        <button class="btn btn-primary" id="closeButton" (click)="cancelarUpdate()">Cancelar</button>
+                        <button class="btn btn-default" id="closeButton" (click)="onSubmit()" style=" margin-right: 10px;">Guarda!</button>
+                            <button class="btn btn-dark" id="closeButton"
+                                (click)="cancelarUpdate()">Cancelar</button>
                     </div>
                 </form>
             </div>

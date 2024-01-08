@@ -34,19 +34,22 @@
             </div>
             <div class="col-md-4 " [hidden]="editing">
                 <div class="contact-info">
-                    <h3 class="wow fadeInUp">{{global.clientSelected.name}}
+                    <h3 class="wow fadeInUp" style="padding-top: 45px;">{{global.clientSelected.name}}
                     </h3>
-                    <div [hidden]="global.clientSelected.images[0]==undefined" style="margin-bottom: 15px;">
-                        <span style="font-weight: 1000; font-size: 15px; margin-left: 5px; color: #5e4cff;">
-                            <button type="submit" name="submit" id="submit" value="Submit"
-                                class="btn btn-outline-dark btn-xs">
-                                <span class="icon icon-pencil"></span></button>
-                        </span>
-                        <span style="font-weight: 1000; font-size: 15px; margin-left: 5px; color: #FF4C60;">
-                            <button type="submit" name="submit" id="submit" value="Submit"
-                                class="btn btn-default btn-xs">
-                                <span class="icon icon-trash"></span></button>
-                        </span>
+                    <div class="floating-content" [hidden]="global.clientSelected.images[0]==undefined">
+                        <div  style="text-align: right;">
+                            <span style="font-weight: 1000; font-size: 15px; color: #5e4cff;">
+                                <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-outline-dark btn-xs">
+                                    <span class="icon icon-pencil"></span>
+                                </button>
+                            </span>
+                            <span style="font-weight: 1000; font-size: 15px; color: #FF4C60; padding-left: 5px;">
+                                <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-default btn-xs" (click)="beforeDelete()">
+                                    <span class="icon icon-trash"></span>
+                                </button>
+                            </span> 
+                        </div>
+
                     </div>
                     <div class="thumb">
                         <img src="{{global.clientSelected.images[0]}}" alt="" />
@@ -61,7 +64,8 @@
                             <div class="col-md-6">
                                 <div class="">
                                     <div class="">
-                                        <ngx-awesome-uploader [adapter]="adapter" [captions]="captions">
+                                        <ngx-awesome-uploader [adapter]="adapter" [captions]="captions"
+                                            [showPreviewContainer]="false">
                                         </ngx-awesome-uploader>
                                     </div>
                                 </div>

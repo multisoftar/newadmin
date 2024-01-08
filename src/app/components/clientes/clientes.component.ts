@@ -9,11 +9,13 @@ import { DemoFilePickerAdapter } from '../file-picker.adapter';
 import { DataApiService } from './../../services/data-api-service';
 import { Butler } from './../../services/butler.service';
 import { Yeoman } from './../../services/yeoman.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css'
 })
+
 export class ClientesComponent {
   editing = false;
   category = 'Seleccione una';
@@ -21,7 +23,7 @@ export class ClientesComponent {
   clients$: any = {};
   public captions: UploaderCaptions = {
     dropzone: {
-      title: 'Imágenes del producto',
+      title: 'Imágenes del cliente',
       or: '.',
       browse: 'Cargar',
     },
@@ -63,12 +65,70 @@ export class ClientesComponent {
     this.global.clientSelected = client;
     this.global.clientPreview = true;
   }
+  beforeDelete(){
+    Swal.fire({
+
+      title: 'Seguro deseas borrar este cliente?',
+
+      text: 'esta acción de se podrá revertir!',
+
+      icon: 'warning',
+
+      showCancelButton: true,
+
+      confirmButtonText: 'Sí, bórralo!',
+
+      cancelButtonText: 'No, mejor no'
+
+    }).then((result) => {
+
+      if (result.value) {
+        this.deleteCliente()
+        Swal.fire(
+
+          'Borrado!',
+
+          'El cliente ha sido borrado.',
+
+          'success'
+
+        )
+
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+        Swal.fire(
+
+          'Cancelado',
+
+          '',
+
+          'error'
+
+        )
+
+      }
+
+    })
+  }
+
+deleteCliente(){
+  
+
+}
   onSubmit() {
     this.data.ref = (Math.floor(Math.random() * 10000000000000)).toString();
     this.data.images = this._butler.uploaderImages;
     this.dataApiService.saveClient(this.data).subscribe(response => {
       console.log(response);
+      this.global.loadClientes();
       this._butler.uploaderImages = [];
+      this.data= {
+        images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
+        name: '',
+        ref: '',
+        idCategory: '',
+      };
+      this.editing=false;
     });
     console.log(this.data);
   }

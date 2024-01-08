@@ -8,6 +8,7 @@ import { DemoFilePickerAdapter } from './../file-picker.adapter';
 import { Butler } from './../../services/butler.service';
 import { HttpClient } from '@angular/common/http';
 import { DataApiService } from './../../services/data-api-service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 @Component({
   selector: 'app-rubros',
   templateUrl: './rubros.component.html',
@@ -42,18 +43,75 @@ export class RubrosComponent {
     cancelarUpdate() {
       this.editing = false;
     }
+    beforeDelete(){
+      Swal.fire({
+  
+        title: 'Seguro deseas borrar este rubro?',
+  
+        text: 'esta acción de se podrá revertir!',
+  
+        icon: 'warning',
+  
+        showCancelButton: true,
+  
+        confirmButtonText: 'Sí, bórralo!',
+  
+        cancelButtonText: 'No, mejor no'
+  
+      }).then((result) => {
+  
+        if (result.value) {
+           this.deleteRubro()
+          Swal.fire(
+  
+            'Borrado!',
+  
+            'el rubro ha sido borrado.',
+  
+            'success'
+  
+          )
+  
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+  
+          Swal.fire(
+  
+            'Cancelado',
+  
+            '',
+  
+            'error'
+  
+          )
+  
+        }
+  
+      })
+    }
     onSubmit() {
       this.data.ref = (Math.floor(Math.random() * 10000000000000)).toString();
       this.data.images = this._butler.uploaderImages;
       this.dataApiService.saveCategory(this.data).subscribe(response => {
         console.log(response);
         this._butler.uploaderImages = [];
+        this.global.loadRubros();
         this.editing = false;
+        this.data= {
+          images: [] as string[], 
+          name: '',
+          ref: ''
+        };
          });
          
       console.log(this.data);
     }
-
+    deleteRubro(){
+      this.global.deleteRubro(this.global.rubroSelected.id).subscribe(response =>{
+      
+        // Swal.fire('Solución borrada');
+        this.global.loadRubros();
+      });
+    }
     ngAfterViewInit(): void {
   
     }

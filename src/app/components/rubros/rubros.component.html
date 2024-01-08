@@ -1,7 +1,7 @@
 <section [hidden]="virtualRouter.routerActive!=='rubros'">
     <div class="container">
         <h2 class="section-title wow fadeInUp" style="position: fixed; z-index: 20; background-color: white; width: 100%; top: 0; padding-top: 50px;">Rubros
-            <span style="color: #FF4C60;" class="icon icon-plus" (click)="edit()"></span>
+            <span style="color: #FF4C60;" class="icon icon-plus iconB" (click)="edit()"></span>
         </h2>
         <h2 class="section-title wow fadeInUp" [hidden]="!editing">Nuevo Rubro
         </h2>
@@ -26,12 +26,13 @@
                 <div class="contact-info">
                     
                     <h3 class="wow fadeInUp">{{global.rubroSelected.name}} 
-                         <span style="font-weight: 1000; font-size: 15px; margin-left: 5px; color: #5e4cff;">
+                        <br/>
+                         <span style="font-weight: 1000; font-size: 15px; margin-left: 5px; color: #5e4cff;" [hidden]="!global.rubroPreview">
                         <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-outline-dark btn-xs">
                             <span class="icon icon-pencil"></span></button>
                         </span>
-                        <span style="font-weight: 1000; font-size: 15px; margin-left: 5px; color: #FF4C60;">
-                            <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-default btn-xs">
+                        <span style="font-weight: 1000; font-size: 15px; margin-left: 5px; color: #FF4C60;" [hidden]="!global.rubroPreview">
+                            <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-default btn-xs"       (click)="beforeDelete()">
                                 <span class="icon icon-trash"></span></button>
                             </span>  
                         <!-- <span style="font-weight: 1000; font-size: 15px; color: #FF4C60;"><a (click)="edit()"  [hidden]="editing" style="cursor: pointer; left: 3px;"> <span class="icon icon-trash"></span></a>

@@ -8,14 +8,24 @@ import { Butler } from './../../services/butler.service';
 import { HttpClient } from '@angular/common/http';
 import { DataApiService } from './../../services/data-api-service';
 import { Yeoman } from '@app/services/yeoman.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 @Component({
   selector: 'app-soluciones',
   templateUrl: './soluciones.component.html',
   styleUrl: './soluciones.component.css'
 })
+
 export class SolucionesComponent implements AfterViewInit {
   editing = false;
+  mouseOverIndex: number = -1;
+  
+  
   soluciones: any;
+  // En tu componente TypeScript
+isMouseOverCard: boolean = false;
+
+// Funciones para manejar eventos del mouse
+
   category = 'Seleccione una';
   categorySeted: boolean = false;
   public captions: UploaderCaptions = {
@@ -58,6 +68,15 @@ export class SolucionesComponent implements AfterViewInit {
   edit() {
     this.editing = true;
   }
+  onMouseEnterCard(index: number) {
+    this.isMouseOverCard = true;
+    this.mouseOverIndex = index;
+  }
+  
+  onMouseLeaveCard() {
+    this.isMouseOverCard = false;
+    this.mouseOverIndex = -1; // Reiniciar el índice cuando se sale del elemento
+  }
   preview(client: any) {
     this.global.clientSelected = client;
     this.global.clientPreview = true;
@@ -68,6 +87,15 @@ export class SolucionesComponent implements AfterViewInit {
     this.dataApiService.saveProduct(this.data).subscribe(response => {
       console.log(response);
       this._butler.uploaderImages = [];
+      this.global.loadSoluciones();
+      this.editing=false;
+      this.data=  {
+        images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
+        name: '',
+        description: '',
+        ref: '',
+        idCategory: ''
+      };
     });
     console.log(this.data);
   }
@@ -93,6 +121,58 @@ export class SolucionesComponent implements AfterViewInit {
       console.log("id: " + JSON.stringify(this.data.idCategory));
     }
   }
+  deleteSolucion(i:any){
+    this.global.deleteSolucion(i).subscribe(response =>{
+      this.global.loadSoluciones();
+      Swal.fire('Solución borrada');
+    });
+  }
   ngAfterViewInit(): void {
+    this.global.showDescriptionArray = new Array(this.global.soluciones.length).fill(false);
+  }
+  beforeDelete(i:any){
+    Swal.fire({
+
+      title: 'Seguro deseas borrar esta solución?',
+
+      text: 'esta acción de se podrá revertir!',
+
+      icon: 'warning',
+
+      showCancelButton: true,
+
+      confirmButtonText: 'Sí, bórralo!',
+
+      cancelButtonText: 'No, mejor no'
+
+    }).then((result) => {
+
+      if (result.value) {
+         this.deleteSolucion(i)
+        Swal.fire(
+
+          'Borrado!',
+
+          'La solución ha sido borrada.',
+
+          'success'
+
+        )
+
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+        Swal.fire(
+
+          'Cancelado',
+
+          '',
+
+          'error'
+
+        )
+
+      }
+
+    })
   }
 }
