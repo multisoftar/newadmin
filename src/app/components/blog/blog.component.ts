@@ -9,6 +9,8 @@ import { DemoFilePickerAdapter } from '../file-picker.adapter';
 import { DataApiService } from './../../services/data-api-service';
 import { Butler } from './../../services/butler.service';
 import { Yeoman } from './../../services/yeoman.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
@@ -69,8 +71,59 @@ export class BlogComponent implements AfterViewInit {
         this.global.postsSelected=posts;
         this.global.postsPreview=true;
       }
+      deletePost(i:any){
+        this.global.deletePost(i).subscribe(response =>{
+          this.global.loadPosts();
+          Swal.fire('Publicación borrada');
+        });
+      }
       
   ngAfterViewInit(): void {
+}
+beforeDelete(i:any){
+  Swal.fire({
+
+    title: 'Seguro deseas borrar esta publicación?',
+
+    text: 'esta acción de se podrá revertir!',
+
+    icon: 'warning',
+
+    showCancelButton: true,
+
+    confirmButtonText: 'Sí, bórrala!',
+
+    cancelButtonText: 'No, mejor no'
+
+  }).then((result) => {
+
+    if (result.value) {
+      this.deletePost(i)
+      Swal.fire(
+
+        'Borrado!',
+
+        'La publicación ha sido borrada.',
+
+        'success'
+
+      )
+
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+      Swal.fire(
+
+        'Cancelado',
+
+        '',
+
+        'error'
+
+      )
+
+    }
+
+  })
 }
   }
   

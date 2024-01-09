@@ -9,7 +9,7 @@ import { DemoFilePickerAdapter } from '../file-picker.adapter';
 import { DataApiService } from './../../services/data-api-service';
 import { Butler } from './../../services/butler.service';
 import { Yeoman } from './../../services/yeoman.service';
-
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 @Component({
   selector: 'app-format-json',
   templateUrl: './format-json.component.html'
@@ -57,6 +57,9 @@ export class FormatJsonComponent implements OnInit{
     public yeoman: Yeoman,
     public dataApiService: DataApiService,
   ){}
+  edit() {
+    this.editing = true;
+  }
   cancelarUpdate() {
     this.editing = false;
   }
@@ -69,6 +72,12 @@ export class FormatJsonComponent implements OnInit{
     this.dataApiService.savePost(this.data).subscribe(response => {
       console.log(response);
       this._butler.uploaderImages = [];
+
+      Swal.fire('Bien...', 'El post ha sido agregado satisfactoriamente!', 'success');
+      this.editing=false;
+      this.global.loadPosts();
+      this.virtualRouter.routerActive="blog";
+
     });
     console.log(this.data);
   }

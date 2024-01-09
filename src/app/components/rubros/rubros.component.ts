@@ -43,6 +43,11 @@ export class RubrosComponent {
     cancelarUpdate() {
       this.editing = false;
     }
+    simpleAlert(){
+
+      Swal.fire('Hello world!');
+  
+    }
     beforeDelete(){
       Swal.fire({
   
@@ -107,8 +112,6 @@ export class RubrosComponent {
     }
     deleteRubro(){
       this.global.deleteRubro(this.global.rubroSelected.id).subscribe(response =>{
-      
-        // Swal.fire('Solución borrada');
         this.global.loadRubros();
       });
     }

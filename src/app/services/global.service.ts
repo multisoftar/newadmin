@@ -12,9 +12,16 @@ import { of } from 'rxjs';
 import { merge } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 export interface ModuleInterface {
-}export interface SolucionInterface {
+}
+export interface SolucionInterface {
 }
 export interface RubroInterface {
+}
+export interface PostInterface {
+}
+export interface IntegrationInterface {
+}
+export interface TestimonialInterface {
 }
 
 @Injectable({
@@ -113,7 +120,13 @@ export class GlobalService {
 		.delete<ModuleInterface>(url_api)
 		.pipe(map(data => data));
 	}
-
+  deletePost(id: string){
+		// const token = this.AuthRESTService.getToken
+		const url_api=	this.yeoman.origin.restUrl+`/api/posts/${id}`;
+		return this.http
+		.delete<PostInterface>(url_api)
+		.pipe(map(data => data));
+	}
   deleteSolucion(id: string){
 		// const token = this.AuthRESTService.getToken
 		const url_api=	this.yeoman.origin.restUrl+`/api/products/${id}`;
@@ -126,6 +139,20 @@ export class GlobalService {
 		const url_api=	this.yeoman.origin.restUrl+`/api/categories/${id}`;
 		return this.http
 		.delete<RubroInterface>(url_api)
+		.pipe(map(data => data));
+	}
+  deleteIntegration(id: string){
+		// const token = this.AuthRESTService.getToken
+		const url_api=	this.yeoman.origin.restUrl+`/api/integrations/${id}`;
+		return this.http
+		.delete<IntegrationInterface>(url_api)
+		.pipe(map(data => data));
+	}
+  deleteTestimonial(id: string){
+		// const token = this.AuthRESTService.getToken
+		const url_api=	this.yeoman.origin.restUrl+`/api/testimonials/${id}`;
+		return this.http
+		.delete<TestimonialInterface>(url_api)
 		.pipe(map(data => data));
 	}
 

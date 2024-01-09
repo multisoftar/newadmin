@@ -1,7 +1,7 @@
 <section id="testimonios" [hidden]="virtualRouter.routerActive!=='testimonios'">
     <div class="container">
         <h2 class="section-title wow fadeInUp" [hidden]="editing">Testimonios
-            <span style="color: #FF4C60;" class="icon icon-plus" (click)="edit()"></span>
+            <span style="color: #FF4C60;" class="icon icon-plus iconB" (click)="edit()"></span>
         </h2>
         <h2 class="section-title wow fadeInUp" [hidden]="!editing">Nuevo Testimonio</h2>
         <div class="spacer" data-height="60"></div>
@@ -11,7 +11,7 @@
                 style="margin-bottom:5%; margin-left:2%">
                 <div class="timeline-container wow fadeInUp">
                     <div class="content">
-                        <span class="time">2019 - {{testimonio.company}}</span>
+                        <span class="time">{{testimonio.company}}</span>
                         <h3 class="title">{{testimonio.name}}</h3>
                         <p>L{{testimonio.detail}}</p>
                     </div>
@@ -66,9 +66,9 @@
                         </div>
                     </div>
                     <div div class="popup-box-actions medium void" style="text-align: end;">
-                        <button class="btn btn-primary" id="closeButton" (click)="onSubmit()" style="background-color: #558b2f;
-                        border-color: #558b2f; margin-right: 10px;">Guardar testimonio!</button>
-                        <button class="btn btn-primary" id="closeButton" (click)="cancelarUpdate()">Cancelar</button>
+                        <button class="btn btn-default" id="closeButton" (click)="onSubmit()" style=" margin-right: 10px;">Guardar</button>
+                        <button class="btn btn-dark" id="closeButton"
+                            (click)="cancelarUpdate()">Cancelar</button>
                     </div>
                 </form>
             </div>
