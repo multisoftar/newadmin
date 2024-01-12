@@ -136,6 +136,10 @@ export class ModulosComponent implements OnInit {
       };
       this.global.loadModulos();
       this.editing=false;
+      Swal.fire('Bien...', 'Modulo agregado satisfactoriamente!', 'success');
+        this.editing=false;
+        this.global.loadModulos();
+        this.virtualRouter.routerActive="modulos";
      
     });
     console.log(this.data);

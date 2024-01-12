@@ -9,14 +9,30 @@
             <div class="card col-md-5 timeline exp bg-white rounded shadow-dark padding-30 overflow-hidden"
                 [hidden]="editing" *ngFor="let testimonio of global.testimonios"
                 style="margin-bottom:5%; margin-left:2%">
+                <div class="float-right-corner"   [hidden]="isMouseOverCard && i !== mouseOverIndex" style="text-align: end;">
+                    <span style="font-weight: 1000; font-size: 15px; color: #5e4cff;">
+                        <button type="submit" name="submit" id="submit" value="Submit"
+                            class="btn btn-outline-dark btn-xs">
+                            <span class="icon icon-pencil"></span>
+                        </button>
+                    </span>
+                    <span style="font-weight: 1000; font-size: 15px; color: #FF4C60; padding-left: 5px;">
+                        <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-default btn-xs"
+                            (click)="beforeDelete(testimonio.id)">
+                            <span class="icon icon-trash"></span>
+                        </button>
+                    </span>
+                </div>
                 <div class="timeline-container wow fadeInUp">
                     <div class="content">
+                        <img src="{{testimonio.images[0]}}" alt=""  style="border-radius: 25px;"/>
                         <span class="time">{{testimonio.company}}</span>
                         <h3 class="title">{{testimonio.name}}</h3>
-                        <p>L{{testimonio.detail}}</p>
+                        <p>{{testimonio.detail}}</p>
                     </div>
                 </div>
                 <span class="line"></span>
+                
             </div>
             <div class="col-md-12" [hidden]="!editing">
                 <form>

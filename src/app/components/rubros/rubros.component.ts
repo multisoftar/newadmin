@@ -106,6 +106,11 @@ export class RubrosComponent {
           name: '',
           ref: ''
         };
+        Swal.fire('Bien...', 'Rubro agregado satisfactoriamente!', 'success');
+        this.editing=false;
+        this.global.loadRubros();
+        this.virtualRouter.routerActive="rubros";
+  
          });
          
       console.log(this.data);

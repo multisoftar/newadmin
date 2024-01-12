@@ -67,7 +67,7 @@ export class IntegracionesComponent {
     deleteIntegration(i:any){
       this.global.deleteIntegration(i).subscribe(response =>{
         this.global.loadIntegrations();
-        Swal.fire('integración borrada');
+        Swal.fire('Integración borrada');
       });
     }
     onSubmit() {
@@ -86,16 +86,19 @@ export class IntegracionesComponent {
         };
         this.global.loadIntegrations();
         this.editing=false;
-       
+        Swal.fire('Bien...', 'Integración agregada satisfactoriamente!', 'success');
+        this.editing=false;
+        this.global.loadIntegrations();
+        this.virtualRouter.routerActive="integraciones";
       });
       console.log(this.data);
     }
     beforeDelete(i:any){
       Swal.fire({
     
-        title: 'Seguro deseas borrar esta publicación?',
+        title: 'Seguro deseas borrar esta Integración?',
     
-        text: 'esta acción de se podrá revertir!',
+        text: 'esta acción no se podrá revertir!',
     
         icon: 'warning',
     

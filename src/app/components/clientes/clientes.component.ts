@@ -129,6 +129,10 @@ deleteCliente(){
         idCategory: '',
       };
       this.editing=false;
+      Swal.fire('Bien...', 'Cliente agregado satisfactoriamente!', 'success');
+        this.editing=false;
+        this.global.loadClientes();
+        this.virtualRouter.routerActive="clientes";
     });
     console.log(this.data);
   }

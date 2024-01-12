@@ -148,7 +148,7 @@ export class GlobalService {
 		.delete<IntegrationInterface>(url_api)
 		.pipe(map(data => data));
 	}
-  deleteTestimonial(id: string){
+  deleteTestimonio(id: string){
 		// const token = this.AuthRESTService.getToken
 		const url_api=	this.yeoman.origin.restUrl+`/api/testimonials/${id}`;
 		return this.http
@@ -168,7 +168,7 @@ export class GlobalService {
   }
   selectRubro(rubroIndex: any) {
 
-   this.clientSelected= { name: "Seleccione un cliente",  images: [] }; 
+    this.clientSelected= { name: "Seleccione un cliente",  images: [] }; 
     this.rubroSelectedBoolean=true;
     this.clientesSelected = [];
     this.rubroIndex=rubroIndex;

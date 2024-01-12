@@ -7,6 +7,7 @@ import { DemoFilePickerAdapter } from  './../file-picker.adapter';
 import { Butler } from '@app/services/butler.service';
 import { HttpClient } from '@angular/common/http';
 import { DataApiService } from '@app/services/data-api-service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 @Component({
   selector: 'app-testimonios',
   templateUrl: './testimonios.component.html',
@@ -69,11 +70,67 @@ export class TestimoniosComponent implements AfterViewInit {
         this.dataApiService.saveTestimony(this.data).subscribe(response=>{
           console.log(response);
           this._butler.uploaderImages=[];
+          Swal.fire('Bien...', 'Testimonio agregado satisfactoriamente!', 'success');
+        this.editing=false;
+        this.global.loadTestimonios();
+        this.virtualRouter.routerActive="testimonios";
         });
         console.log(this.data);
         
         }
-  ngAfterViewInit(): void {
-}
+        deleteTestimonio(i:any){
+          this.global.deleteTestimonio(i).subscribe(response =>{
+            this.global.loadTestimonios();
+            Swal.fire('Testimonio borrado');
+          });
+        }
+       
+        beforeDelete(i:any){
+          Swal.fire({
+      
+            title: 'Seguro deseas borrar este testimonio?',
+      
+            text: 'esta acción de se podrá revertir!',
+      
+            icon: 'warning',
+      
+            showCancelButton: true,
+      
+            confirmButtonText: 'Sí, bórralo!',
+      
+            cancelButtonText: 'No, mejor no'
+      
+          }).then((result) => {
+      
+            if (result.value) {
+               this.deleteTestimonio(i)
+              Swal.fire(
+      
+                'Borrado!',
+      
+                'El Testimonio ha sido borrado.',
+      
+                'success'
+      
+              )
+      
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+      
+              Swal.fire(
+      
+                'Cancelado',
+      
+                '',
+      
+                'error'
+      
+              )
+      
+            }
+      
+          })
+        }
+        ngAfterViewInit(): void {
+        }
   }
   

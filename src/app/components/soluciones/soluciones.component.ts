@@ -96,7 +96,12 @@ isMouseOverCard: boolean = false;
         ref: '',
         idCategory: ''
       };
+      Swal.fire('Bien...', 'Solución agregada satisfactoriamente!', 'success');
+        this.editing=false;
+        this.global.loadSoluciones();
+        this.virtualRouter.routerActive="soluciones";
     });
+    
     console.log(this.data);
   }
   getAllCategories() {
