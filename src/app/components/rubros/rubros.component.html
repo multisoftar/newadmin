@@ -1,10 +1,14 @@
 <section [hidden]="virtualRouter.routerActive!=='rubros'">
     <div class="container">
-        <h2 class="section-title wow fadeInUp" style="position: fixed; z-index: 20; background-color: white; width: 100%; top: 0; padding-top: 50px;">Rubros
+        <h2 class="section-title wow fadeInUp" style="position: fixed; z-index: 20; background-color: white; width: 100%; top: 0; padding-top: 50px;">
+            Rubros
             <span style="color: #FF4C60;" class="icon icon-plus iconB" (click)="edit()"></span>
         </h2>
+        
         <h2 class="section-title wow fadeInUp" [hidden]="!editing">Nuevo Rubro
         </h2>
+        <!-- <h2 class="section-title wow fadeInUp" [hidden]="update">Actualizar Rubro
+        </h2> -->
         
         <div class="spacer" data-height="60"></div>
         <span> </span>
@@ -24,23 +28,19 @@
             </div>
             <div class="col-md-4 " style="position: fixed; right: 20px;" [hidden]="editing">
                 <div class="contact-info">
-                    
-                    <h3 class="wow fadeInUp">{{global.rubroSelected.name}} 
-                        <br/>
-                         <span style="font-weight: 1000; font-size: 15px; margin-left: 5px; color: #5e4cff;" [hidden]="!global.rubroPreview">
-                        <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-outline-dark btn-xs">
+                    <span style="font-weight: 1000; font-size: 15px; margin-left: 5px; color: #5e4cff;" >
+                        <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-outline-dark btn-xs" >
                             <span class="icon icon-pencil"></span></button>
                         </span>
                         <span style="font-weight: 1000; font-size: 15px; margin-left: 5px; color: #FF4C60;" [hidden]="!global.rubroPreview">
                             <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-default btn-xs"       (click)="beforeDelete()">
                                 <span class="icon icon-trash"></span></button>
                             </span>  
-                        <!-- <span style="font-weight: 1000; font-size: 15px; color: #FF4C60;"><a (click)="edit()"  [hidden]="editing" style="cursor: pointer; left: 3px;"> <span class="icon icon-trash"></span></a>
-                    </span>  -->
-                </h3>
-                    <p class="wow fadeInUp">
-                    </p>
+                        
+                    
+                    
                     <div class="thumb">
+                        <h3 class="wow fadeInUp">{{global.rubroSelected.name}} </h3>
                         <img src="{{global.rubroSelected.images[0]}}" alt="" />
                         <div class="mask"></div>
                     </div>
@@ -51,7 +51,21 @@
                     <div class="contact-info">
                         <form>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <div class="">
+                                            <ngx-awesome-uploader 
+                                            [adapter]="adapter" 
+                                            [captions]="captions"
+                                            [showPreviewContainer]="false">
+                                            </ngx-awesome-uploader>
+                                            <span *ngFor="let image of _butler.uploaderImages">
+                                                <img src="{{image}}" alt="" style="max-width: 100px; padding: 2%; border-radius: 15px;"> <br />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="">
                                         <div class="">
                                             <div class="form-group">
@@ -76,6 +90,7 @@
                         </form>
                     </div>
                 </div>
+              
             </div>
         </div>
     </div>

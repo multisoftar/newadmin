@@ -9,13 +9,31 @@ import { Butler } from './../../services/butler.service';
 import { HttpClient } from '@angular/common/http';
 import { DataApiService } from './../../services/data-api-service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { Yeoman } from '@app/services/yeoman.service';
+
 @Component({
   selector: 'app-rubros',
   templateUrl: './rubros.component.html',
   styleUrl: './rubros.component.css'
 })
 export class RubrosComponent {
-  editing=false;
+  editing = false;
+  public captions: UploaderCaptions = {
+    dropzone: {
+      title: 'Imágenes del módulo',
+      or: '.',
+      browse: 'Cargar',
+    },
+    cropper: {
+      crop: 'Cortar',
+      cancel: 'Cancelar',
+    },
+    previewCard: {
+      remove: 'Borrar',
+      uploadError: 'error',
+    },
+  };
+
   data = {
     images: [] as string[], 
     name: '',
@@ -30,19 +48,21 @@ export class RubrosComponent {
     public global: GlobalService,
     public _butler: Butler,
     public dataApiService: DataApiService,
-    public http: HttpClient
+    public http: HttpClient,
+    public yeoman: Yeoman
     ) {
     }
     preview(rubro:any){
       this.global.rubroSelected=rubro;
       this.global.rubroPreview=true;
     }
-    edit(){
-      this.editing=true;
+    edit() {
+      this.editing = true;
     }
     cancelarUpdate() {
       this.editing = false;
     }
+   
     simpleAlert(){
 
       Swal.fire('Hello world!');
@@ -115,6 +135,11 @@ export class RubrosComponent {
          
       console.log(this.data);
     }
+
+ 
+    
+    
+
     deleteRubro(){
       this.global.deleteRubro(this.global.rubroSelected.id).subscribe(response =>{
         this.global.loadRubros();

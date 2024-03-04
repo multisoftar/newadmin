@@ -4,6 +4,7 @@ import { forkJoin, Observable,of } from 'rxjs';
 import { map,mergeMap } from 'rxjs/operators';
 import { Yeoman } from './yeoman.service';
 import { AuthRESTService } from "./auth-rest.service";
+import { RubroInterface } from './global.service';
 
 export interface UserInterface {
 }
@@ -19,12 +20,14 @@ export interface DistInterface {
 }
 export interface ProductInterface {
 }
-
 export interface CarInterface {
 }
 export interface MemberInterface {
+}
+export interface RubroInterfaces {
 
 }
+
 export interface CardInterface {
 	id?:string;
 }
@@ -157,6 +160,14 @@ export class DataApiService {
 	}
 	
 
+	
+	updateRubro(car :RubroInterfaces, ){
+		// let token = this.authService.getToken();
+		const url_api=	this.yeoman.origin.restUrl+`/api/categories`;
+		return this.http
+		.put<RubroInterfaces>(url_api, car)
+		.pipe(map(data => data));
+	}
 	clientUpdate(client :ClientInterface, id: string){
 		// let token = this.authService.getToken();
 		const url_api=	this.yeoman.origin.restUrl+`/api/clients/${id}`;
