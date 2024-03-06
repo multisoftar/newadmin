@@ -3,7 +3,7 @@
         <h2 class="section-title wow fadeInUp"
             style="position: fixed; z-index: 20; background-color: white; width: 100%; top: 0; padding-top: 50px;">
             Módulos
-            <span style="color: #FF4C60;" class="icon icon-plus iconB" (click)="edit()"></span>
+            <span style="color: #FF4C60;" class="icon icon-plus iconB" (click)="new()"></span>
         </h2>
         <span> </span>
         <div class="row">
@@ -30,7 +30,7 @@
                                 <div class="float-right-corner" [ngStyle]="{'display': global.showDescriptionArray[i] ? 'block' : 'none'}">
                                     <!-- Tu contenido flotante aquí -->
                                     <span style="font-weight: 1000; font-size: 15px; color: #5e4cff;">
-                                        <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-outline-dark btn-xs">
+                                        <button type="submit" name="submit" id="submit" value="Submit" class="btn btn-outline-dark btn-xs" (click)="edit(modulo)" style="cursor: pointer;">
                                             <span class="icon icon-pencil"></span>
                                         </button>
                                     </span>
@@ -46,7 +46,7 @@
                 </div>
             </div>
            
-            <div class="col-md-12 " [hidden]="!editing">
+            <div class="col-md-12 " [hidden]="!editing || isEditing">
                 <div class="contact-info">
                     <form>
                         <div class="row">
@@ -89,9 +89,9 @@
                             </div>
                         </div>
                         <div class="popup-box-actions medium void" style="text-align: end;">
-                            <button class="btn btn-default" id="closeButton" (click)="onSubmit()" style=" margin-right: 10px;">Guardar</button>
-                            <button class="btn btn-dark" id="closeButton"
-                                (click)="cancelarUpdate()">Cancelar</button>
+                            <button class="btn btn-default" id="closeButton" (click)="onSubmit()" style=" margin-right: 10px;" [hidden]="editing">Guardar</button>
+                            <button class="btn btn-default" id="closeButton" (click)="updateModule()" style=" margin-right: 10px;" [hidden]="!editing">Guardar</button>
+                            <button class="btn btn-dark" id="closeButton" (click)="cancelarUpdate()">Cancelar</button>
                         </div>
                     </form>
                 </div>

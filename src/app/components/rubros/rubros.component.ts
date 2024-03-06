@@ -18,6 +18,7 @@ import { Yeoman } from '@app/services/yeoman.service';
 })
 export class RubrosComponent {
   editing = false;
+  isEditing = false;
   public captions: UploaderCaptions = {
     dropzone: {
       title: 'Imágenes del módulo',
@@ -58,6 +59,7 @@ export class RubrosComponent {
     }
     edit() {
       this.editing = true;
+      this.data=this.global.rubroSelected;
     }
     cancelarUpdate() {
       this.editing = false;
@@ -136,7 +138,30 @@ export class RubrosComponent {
       console.log(this.data);
     }
 
- 
+    updateRubro() {
+      this.dataApiService.categoryUpdate(this.data, this.global.rubroSelected.id).subscribe(response => {
+        this.data.images = this._butler.uploaderImages;
+        console.log(response);
+        this.global.loadRubros();
+        this.editing = false;
+        this.virtualRouter.routerActive = "rubros";
+        this.data= {
+          images: [] as string[], 
+          name: '',
+          ref: ''
+        };
+        this._butler.uploaderImages = [];
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Rubro Actualizado',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      });
+    }
+    
+    
     
     
 

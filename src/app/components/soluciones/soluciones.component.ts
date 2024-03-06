@@ -17,6 +17,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 export class SolucionesComponent implements AfterViewInit {
   editing = false;
+  isEditing = false;
   mouseOverIndex: number = -1;
   
   
@@ -65,8 +66,21 @@ isMouseOverCard: boolean = false;
   cancelarUpdate() {
     this.editing = false;
   }
-  edit() {
+  edit(solucion:any) {
     this.editing = true;
+    this.global.solucionSelected=solucion;
+    this.data=solucion;
+  }
+  new() {
+    this.editing = true;
+    this.data=   {
+      images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
+      name: '',
+      description: '',
+      ref: '',
+      idCategory: ''
+    };
+  
   }
   onMouseEnterCard(index: number) {
     this.isMouseOverCard = true;
@@ -104,6 +118,25 @@ isMouseOverCard: boolean = false;
     
     console.log(this.data);
   }
+  updateSolution() {
+    this.dataApiService.productsUpdate(this.data, this.global.solucionSelected.id).subscribe(response => {
+      console.log(response);
+      this._butler.uploaderImages=[];
+      this.global.loadSoluciones();
+      this.virtualRouter.routerActive="soluciones";
+      this.editing = false;
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Información guardada',
+        showConfirmButton: false,
+        timer: 1500
+      })         
+    });
+    console.log(this.data);
+    
+    }
+  
   getAllCategories() {
     this.dataApiService.getAllCategory().subscribe(response => {
       this.yeoman.categories = response;

@@ -161,7 +161,7 @@ export class DataApiService {
 	
 
 	
-	updateRubro(car :RubroInterfaces, ){
+	updateRubro(car :RubroInterfaces,  id: string){
 		// let token = this.authService.getToken();
 		const url_api=	this.yeoman.origin.restUrl+`/api/categories`;
 		return this.http

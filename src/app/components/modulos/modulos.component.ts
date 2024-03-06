@@ -15,6 +15,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 export class ModulosComponent implements OnInit {
   editing = false;
+  isEditing = false;
   public captions: UploaderCaptions = {
     dropzone: {
       title: 'Imágenes del módulo',
@@ -58,8 +59,23 @@ export class ModulosComponent implements OnInit {
     this.global.moduloSelected = modulo;
     this.global.moduloPreview = true;
   }
-  edit() {
+  edit( modulo:any) {
     this.editing = true;
+    this.global.moduloSelected=modulo;
+    this.data=modulo;
+  }
+  new() {
+    this.editing = true;
+    this.data=  {
+      images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
+      name: '',
+      description: '',
+      ref: '',
+      referencia: '',
+      idCategory: '',
+      categories: [] as Array<{ name: string, id: number }>
+      
+    };
   }
   cancelarUpdate() {
     this.editing = false;
@@ -144,6 +160,24 @@ export class ModulosComponent implements OnInit {
     });
     console.log(this.data);
   }
+  updateModule() {
+    this.dataApiService.modulesUpdate(this.data, this.global.moduloSelected.id).subscribe(response => {
+      console.log(response);
+      this._butler.uploaderImages=[];
+      this.global.loadSoluciones();
+      this.virtualRouter.routerActive="modulos";
+      this.editing = false;
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Información guardada',
+        showConfirmButton: false,
+        timer: 1500
+      })         
+    });
+    console.log(this.data);
+    
+    }
   ngOnInit() {
     this.global.showDescriptionArray = new Array(this.global.modulos.length).fill(false);
   }
