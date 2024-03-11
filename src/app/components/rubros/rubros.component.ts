@@ -18,10 +18,11 @@ import { Yeoman } from '@app/services/yeoman.service';
 })
 export class RubrosComponent {
   editing = false;
+  adding = false;
   isEditing = false;
   public captions: UploaderCaptions = {
     dropzone: {
-      title: 'Imágenes del módulo',
+      title: 'Imágenes de rubros',
       or: '.',
       browse: 'Cargar',
     },
@@ -34,7 +35,6 @@ export class RubrosComponent {
       uploadError: 'error',
     },
   };
-
   data = {
     images: [] as string[], 
     name: '',
@@ -69,6 +69,9 @@ export class RubrosComponent {
 
       Swal.fire('Hello world!');
   
+    }
+    add(){
+      this.adding=true;
     }
     beforeDelete(){
       Swal.fire({
@@ -121,7 +124,8 @@ export class RubrosComponent {
       this.dataApiService.saveCategory(this.data).subscribe(response => {
         console.log(response);
         this._butler.uploaderImages = [];
-        this.global.loadRubros();
+        this.data.images = [];
+       /*  this.global.loadRubros(); */
         this.editing = false;
         this.data= {
           images: [] as string[], 
@@ -130,6 +134,7 @@ export class RubrosComponent {
         };
         Swal.fire('Bien...', 'Rubro agregado satisfactoriamente!', 'success');
         this.editing=false;
+        this.adding=false;
         this.global.loadRubros();
         this.virtualRouter.routerActive="rubros";
   
@@ -139,8 +144,9 @@ export class RubrosComponent {
     }
 
     updateRubro() {
+      this.data.images = this._butler.uploaderImages;
       this.dataApiService.categoryUpdate(this.data, this.global.rubroSelected.id).subscribe(response => {
-        this.data.images = this._butler.uploaderImages;
+        
         console.log(response);
         this.global.loadRubros();
         this.editing = false;
@@ -167,6 +173,7 @@ export class RubrosComponent {
 
     deleteRubro(){
       this.global.deleteRubro(this.global.rubroSelected.id).subscribe(response =>{
+        this.global.rubroSelected={ name: "Seleccionar",  images: [] , id:"",ref:""};
         this.global.loadRubros();
       });
     }

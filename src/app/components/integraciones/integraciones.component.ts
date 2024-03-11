@@ -77,7 +77,7 @@ export class IntegracionesComponent {
         console.log(response);
         this._butler.uploaderImages = [];
         this.data.images = [];
-        Swal.fire('Bien...', 'Integración agregada satisfactoriamente!', 'success');
+       /*  Swal.fire('Bien...', 'Integración agregada satisfactoriamente!', 'success'); */
         this.data=  {
           images: [] as string[], // o cualquier otro tipo de dato adecuado, como any[]
           name: '',
